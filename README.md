@@ -3,7 +3,7 @@
 > Xueli Geng, Licheng Jiao, Lingling Li, Fang Liu, Xu Liu, Shuyuan Yang, Xiangrong Zhang
 > *IEEE Transactions on Geoscience and Remote Sensing, 2023*
 
-![fig24](img/framework.pdf)
+![MIBF-Net](img/framework.pdf)
 ## Abstract
 
 Multisource remote sensing images provide complementary multidimensional information for reliable and accurate classification. However, gaps in imaging mechanisms result in heterogeneity between multiple source images. During fusion, this
