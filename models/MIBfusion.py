@@ -7,6 +7,9 @@ import torch.nn as nn
 import torch
 from torch.nn import functional as F
 
+
+torch.autograd.set_detect_anomaly(True)
+
 ds = torch.distributions
 def cuda(tensor, is_cuda):
     if is_cuda:
@@ -21,7 +24,7 @@ class SELayer(nn.Module):
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
         self.fc = nn.Sequential(
             nn.Linear(channel, channel // reduction, bias=False),
-            nn.ReLU(inplace=True),
+            nn.ReLU(inplace=False),
             nn.Linear(channel // reduction, channel, bias=False),
             nn.Sigmoid()
         )
@@ -51,7 +54,6 @@ class MSCNN(nn.Module):
                                         nn.BatchNorm2d(64),
                                         nn.ReLU(inplace=False),
                                         nn.MaxPool2d(2, 2),
-                                        nn.ReLU(inplace=False)
                                       )
 
         self.SELayer = SELayer(64)
@@ -85,7 +87,6 @@ class PCNN(nn.Module):
                                             nn.BatchNorm2d(64),
                                             nn.ReLU(inplace=False),
                                             nn.MaxPool2d(2, 2),
-                                            nn.ReLU(inplace=False)
                                       )
         self.SELayer = SELayer(32)
 
@@ -124,7 +125,7 @@ class IBfusion(nn.Module):
         self.d_l = dim
 
         self.encoder = nn.Sequential(nn.Linear(self.d_l, inner),
-                                 nn.ReLU(inplace=True))
+                                 nn.ReLU(inplace=False))
 
         self.fc_mu = nn.Linear(inner, self.d_l)
         self.fc_std = nn.Linear(inner, self.d_l)
